@@ -1,0 +1,19 @@
+{
+  "name": "jobbatical-api",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "~1.0.1",
+    "express": "^4.13.4",
+    "pg": "^4.5.3"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "version": "0.0.1",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/KristerV/jobbatical-api.git"
+  },
+  "author": "Krister Viirsaar"
+}
