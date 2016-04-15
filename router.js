@@ -12,28 +12,22 @@ router.get('/topActiveUsers', function(req, res) {
 
 	// Pagination
 	var page = req.query.page || 0;
-	var limit = 10;
+	var limit = 2;
 
 	// Query users
     var client = pgClient();
     client.connect();
     var query = client.query(`
     	SELECT
-    		*, 
-    		(
-    			SELECT COUNT(*) FROM applications 
-    			WHERE created_at > NOW() - INTERVAL '7 days' 
-    			AND users.id=applications.user_id
-	    	) ,
-    		ARRAY(
-    			SELECT created_at 
-    			FROM listings 
-    			WHERE users.id=listings.created_by
-    			ORDER BY created_at DESC 
-    			LIMIT 1
-    		) AS listings
+    		users.id,
+			users.created_at,
+			users.name,
+			COUNT(applications.listing_id) AS count,
+			array_agg(listings.created_at) AS listings
     	FROM users 
-    	ORDER BY listings.created_at 
+    	LEFT JOIN applications ON users.id=applications.user_id AND applications.created_at > NOW() - INTERVAL '7 days'
+    	LEFT JOIN listings ON users.id=listings.created_by
+    	GROUP BY users.id
     	LIMIT ${limit} 
     	OFFSET ${page}
     	`);
