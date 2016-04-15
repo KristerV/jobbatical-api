@@ -10,10 +10,9 @@ pgClient = function() {
 }
 // Insert data
 require('./db/createTables.js')
-require('./db/insertDummyData.js')
 
 // Init router
-require('./initRouter.js')
+require('./router.js')
 
 // Start server
 var port = 3000;

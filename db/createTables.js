@@ -1,6 +1,7 @@
 client = pgClient()
 client.connect();
 
+console.log("INSERT TABLES")
 var query = client.query(`
 	create table IF NOT EXISTS users (
 		id serial primary key,
@@ -39,4 +40,8 @@ var query = client.query(`
 `);
 
 // Terminate connection
-query.on('end', function() { client.end(); });
+query.on('end', function() {
+	client.end();
+	console.log("INSERT TABLES DONE")
+	require('./insertDummyData.js')
+});

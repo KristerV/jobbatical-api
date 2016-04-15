@@ -8,6 +8,7 @@ query.on('row', function(row){
 })
 query.on('end', function(result){
 	if (result.rowCount === 0) {
+		console.log("INSERT DUMMY DATA")
 		var insert = client.query(`
 			insert into users (id, created_at, name) values
 				(1, '2015-01-13 15:30', 'Mark'),
@@ -30,14 +31,33 @@ query.on('end', function(result){
 			;
 
 			insert into listings (id, created_at, created_by, name, description) values
-				(1, '2015-01-15 11:00', 1, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...')
+				(1, '2015-01-15 11:00', 1, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
+				(2, '2015-02-15 11:00', 1, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
+				(3, '2016-02-15 11:00', 1, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
+				(4, '2016-02-15 11:00', 2, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
+				(5, '2016-03-15 11:00', 2, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
+				(6, '2016-03-15 11:00', 4, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
+				(7, '2016-04-15 11:00', 4, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
+				(8, '2016-04-15 11:00', 4, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
+				(9, '2016-04-15 11:00', 3, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...')
 			;
 
 			insert into applications (created_at, user_id, listing_id, cover_letter) values
-				('2015-01-16 12:00', 2, 1, 'Hello, ...')
+				('2015-01-1 12:00', 2, 1, 'Hello, ...'),
+				('2015-01-2 12:00', 2, 2, 'Hello, ...'),
+				('2015-01-3 12:00', 2, 3, 'Hello, ...'),
+				('2015-01-4 12:00', 2, 4, 'Hello, ...'),
+				('2016-02-5 12:00', 2, 5, 'Hello, ...'),
+				('2016-02-6 12:00', 1, 6, 'Hello, ...'),
+				('2016-03-7 12:00', 1, 7, 'Hello, ...'),
+				('2016-04-8 12:00', 1, 8, 'Hello, ...'),
+				('2016-04-9 12:00', 3, 9, 'Hello, ...')
 			;
 		`);
-		insert.on('end', () => {client.end();})
+		insert.on('end', () => {
+			client.end();
+			console.log("INSERT DUMMY DATA DONE")
+		})
 	} else {
 		client.end();
 	}
