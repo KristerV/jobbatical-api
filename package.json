@@ -2,9 +2,11 @@
   "name": "jobbatical-api",
   "main": "server.js",
   "dependencies": {
+    "async": "^2.0.0-rc.3",
     "body-parser": "~1.0.1",
     "express": "^4.13.4",
-    "pg": "^4.5.3"
+    "pg": "^4.5.3",
+    "underscore": "^1.8.3"
   },
   "scripts": {
     "start": "nodemon server.js"

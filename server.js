@@ -1,6 +1,9 @@
+_ = require('underscore');
+
 // Required packages
 express = require('express');
 app = express();
+async = require("async");
 var pg = require('pg');
 
 // Database init
@@ -9,10 +12,10 @@ pgClient = function() {
 	return new pg.Client(pgURL)
 }
 // Insert data
-require('./db/createTables.js')
+require('./db/createTables.js');
 
 // Init router
-require('./router.js')
+require('./router.js');
 
 // Start server
 var port = 3000;

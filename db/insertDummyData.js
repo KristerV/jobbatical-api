@@ -19,13 +19,17 @@ dataExistsQuery.on('end', function(result){
 
 			insert into companies (id, created_at, name) values
 				(1, '2015-01-13 15:00', 'Facewall'),
-				(2, '2015-01-17 15:00', 'Carl & Co')
+				(2, '2015-01-17 15:00', 'Carl & Co'),
+				(3, '2015-01-17 15:00', 'Jobb'),
+				(4, '2015-01-17 15:00', 'Toitla')
 			;
 
 			insert into teams (company_id, user_id, contact_user) values
 				(1, 1, TRUE),
 				(2, 3, FALSE),
-				(2, 4, TRUE)
+				(2, 4, TRUE),
+				(3, 4, TRUE),
+				(4, 4, FALSE)
 			;
 
 			insert into listings (id, created_at, created_by, name, description) values

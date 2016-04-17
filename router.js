@@ -1,3 +1,4 @@
+
 // Use Expresses built in router
 router = express.Router();
 
@@ -45,26 +46,47 @@ router.get('/topActiveUsers', function(req, res) {
 
 // API GET user info
 router.get('/users', function(req, res) {
-    var client = pgClient();
-    client.connect();
 
     var userId = req.query.id;
     if (!Number(userId))
         throw new Error(401, 'User id needs to be a number');
 
-    var query = client.query(`
-    	SELECT *
-    	FROM users
-    	WHERE id='${userId}'
-    `);
+    async.parallel([
+        callback => queryString('users', `SELECT * FROM users WHERE id='${userId}'`, callback),
+        callback => queryString('companies', `
+            SELECT
+                companies.*,
+                teams.contact_user
+            FROM teams
+            RIGHT JOIN companies ON teams.company_id=companies.id
+            WHERE teams.user_id='${userId}'
+        `, callback),
+        callback => queryString('listings', `SELECT * FROM listings WHERE created_by='${userId}'`, callback),
+        callback => queryString('applications', `SELECT * FROM applications WHERE user_id='${userId}'`, callback)
+    ], (err, results) => {
+        if (err)
+            console.warn(err);
+        else {
+            var obj = {};
+            for (var i = 0; i < results.length; i++)
+                obj = _.extend(obj, results[i]);
 
-    var user;
-    query.on('row', row => user = row);
-    query.on('end', () => {
-    	res.json(user);
-    	client.end();
+            _.extend(obj, obj.users[0]);
+            delete obj.users
+            res.json(obj);
+        }
     });
+
 });
 
 // Register routes
 app.use('/', router);
+
+function queryString(name, string, callback) {
+    var client = pgClient();
+    client.connect();
+    var query = client.query(string);
+    var rows = [];
+    query.on('row', row => rows.push(row));
+    query.on('end', () => callback(null, {[name]: rows}));
+}
