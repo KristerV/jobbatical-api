@@ -1,14 +1,12 @@
-client = pgClient()
+var client = pgClient();
 client.connect();
 
-var dataExists = false
-var query = client.query('SELECT * FROM users')
-query.on('row', function(row){
-	dataExists = true
-})
-query.on('end', function(result){
+var dataExistsQuery = client.query('SELECT * FROM users');
+
+dataExistsQuery.on('end', function(result){
 	if (result.rowCount === 0) {
-		console.log("INSERT DUMMY DATA")
+
+		console.log("INSERT DUMMY DATA");
 		var insert = client.query(`
 			insert into users (id, created_at, name) values
 				(1, '2015-01-13 15:30', 'Mark'),
@@ -38,8 +36,8 @@ query.on('end', function(result){
 				(5, '2016-03-15 11:00', 2, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
 				(6, '2016-03-15 11:00', 4, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
 				(7, '2016-04-15 11:00', 4, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
-				(8, '2016-04-15 11:00', 4, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
-				(9, '2016-04-15 11:00', 3, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...')
+				(8, '2016-05-15 11:00', 4, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...'),
+				(9, '2016-06-15 11:00', 3, 'Join us conquering the world!', 'This is your best chance to be on the right side of the equation...')
 			;
 
 			insert into applications (created_at, user_id, listing_id, cover_letter) values
@@ -51,14 +49,18 @@ query.on('end', function(result){
 				('2016-02-6 12:00', 1, 6, 'Hello, ...'),
 				('2016-03-7 12:00', 1, 7, 'Hello, ...'),
 				('2016-04-8 12:00', 1, 8, 'Hello, ...'),
-				('2016-04-9 12:00', 3, 9, 'Hello, ...')
+				('2016-07-9 12:00', 3, 9, 'Hello, ...')
 			;
 		`);
+
 		insert.on('end', () => {
 			client.end();
-			console.log("INSERT DUMMY DATA DONE")
-		})
+			console.log("INSERT DUMMY DATA DONE");
+			require('./denormalizeActivity.js')
+		});
+
 	} else {
 		client.end();
+		require('./denormalizeActivity.js')
 	}
-})
+});

@@ -22,12 +22,14 @@ router.get('/topActiveUsers', function(req, res) {
     		users.id,
 			users.created_at,
 			users.name,
+			last_activity,
 			COUNT(applications.listing_id) AS count,
 			array_agg(listings.created_at) AS listings
     	FROM users 
     	LEFT JOIN applications ON users.id=applications.user_id AND applications.created_at > NOW() - INTERVAL '7 days'
     	LEFT JOIN listings ON users.id=listings.created_by
     	GROUP BY users.id
+    	ORDER BY last_activity DESC
     	LIMIT ${limit} 
     	OFFSET ${page}
     	`);

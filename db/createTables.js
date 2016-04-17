@@ -1,7 +1,7 @@
-client = pgClient()
+var client = pgClient()
 client.connect();
 
-console.log("INSERT TABLES")
+console.log("INSERT TABLES");
 var query = client.query(`
 	create table IF NOT EXISTS users (
 		id serial primary key,
