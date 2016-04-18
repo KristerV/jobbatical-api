@@ -10,7 +10,7 @@ Start server with `npm start` and go to [http://localhost:3000](http://localhost
 
 **Frontend** tasks were completed in 1h:50m.
 
-Timing precision is 10m. The backend took me a lot longer than a proper Node.js developer would have spent. More details in "Development notes".
+Timing precision is 10m (git log will not reflect correct work duration, as I worked on and off during the weekend). The backend took me a lot longer than a proper Node.js developer would have spent. More details in "Development notes".
 
 ## Development notes
 
