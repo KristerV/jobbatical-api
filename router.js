@@ -13,7 +13,7 @@ router.get('/topActiveUsers', function(req, res) {
 
 	// Pagination
     var page = 0;
-	var limit = 2;
+	var limit = 10;
     var reqPage = req.query.page;
     if (Number(reqPage)) // check that it is a number
         page = reqPage * limit;
@@ -61,8 +61,19 @@ router.get('/users', function(req, res) {
             RIGHT JOIN companies ON teams.company_id=companies.id
             WHERE teams.user_id='${userId}'
         `, callback),
-        callback => queryString('listings', `SELECT * FROM listings WHERE created_by='${userId}'`, callback),
-        callback => queryString('applications', `SELECT * FROM applications WHERE user_id='${userId}'`, callback)
+        callback => queryString('createdListings', `SELECT * FROM listings WHERE created_by='${userId}'`, callback),
+        callback => queryString('applications', `
+            SELECT
+                applications.*,
+                json_build_object(
+                    'id', li.id,
+                    'name', li.name,
+                    'description', li.description
+                ) AS createdListings
+            FROM applications
+            LEFT JOIN listings li ON li.id=applications.listing_id
+            WHERE user_id='${userId}'
+        `, callback)
     ], (err, results) => {
         if (err)
             console.warn(err);
@@ -72,7 +83,7 @@ router.get('/users', function(req, res) {
                 obj = _.extend(obj, results[i]);
 
             _.extend(obj, obj.users[0]);
-            delete obj.users
+            delete obj.users;
             res.json(obj);
         }
     });
