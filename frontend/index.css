@@ -1,0 +1,94 @@
+html, body {
+    margin: 0;
+}
+
+/*  GENERAL ELEMENTS  */
+
+p {
+    margin: 0;
+    padding: 1em;
+    color: white;
+}
+
+.bg {
+    background-color: rgba(0,100,0,0.3);
+}
+
+td {
+    padding: 0;
+}
+
+/*  LAYOUT  */
+
+table {
+    height: 100%;
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+}
+
+/* menu */
+
+.menu {
+    width: 300px;
+    position: absolute;
+    right: 0;
+}
+
+/* content */
+
+.content-container {
+    padding: 20px 0;
+    margin: 0 auto;
+    width: 820px;
+    position: relative;
+}
+
+.content-container > div {
+    display: inline-block;
+}
+
+.content {
+    width: 500px;
+}
+
+.content > .subcontent {
+    width: 220px;
+    float: left;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+/* footer */
+
+.footer-container {
+    height: 100%;
+}
+
+.footer {
+    height: 100%;
+}
+
+.footer p {
+    width: 800px;
+    margin: auto;
+}
+
+/*  RESPONSIVNESS  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
