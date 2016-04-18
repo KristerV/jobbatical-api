@@ -19,8 +19,7 @@ router.get('/topActiveUsers', function(req, res) {
         page = reqPage * limit;
 
 	// Query users
-    var client = pgClient();
-    client.connect();
+    var client = Database.newClient();
     var query = client.query(`
     	SELECT
     		users.id,
@@ -29,12 +28,12 @@ router.get('/topActiveUsers', function(req, res) {
 			last_activity,
 			COUNT(applications.listing_id) AS count,
 			array_agg(listings.created_at) AS listings
-    	FROM users 
+    	FROM users
     	LEFT JOIN applications ON users.id=applications.user_id AND applications.created_at > NOW() - INTERVAL '7 days'
     	LEFT JOIN listings ON users.id=listings.created_by
     	GROUP BY users.id
     	ORDER BY last_activity DESC
-    	LIMIT ${limit} 
+    	LIMIT ${limit}
     	OFFSET ${page}
     	`);
     query.on('row', row => users.push(row));
@@ -94,8 +93,7 @@ router.get('/users', function(req, res) {
 app.use('/', router);
 
 function queryString(name, string, callback) {
-    var client = pgClient();
-    client.connect();
+    var client = Database.newClient();
     var query = client.query(string);
     var rows = [];
     query.on('row', row => rows.push(row));

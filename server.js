@@ -1,18 +1,12 @@
-_ = require('underscore');
 
 // Required packages
+_ = require('underscore');
 express = require('express');
 app = express();
 async = require("async");
-var pg = require('pg');
 
-// Database init
-var pgURL = process.env.DATABASE_URL || 'postgres://postgres:pass@localhost:5432/jobb';
-pgClient = function() {
-	return new pg.Client(pgURL)
-}
-// Insert data
-require('./db/createTables.js');
+// Init database and insert fake data if DB empty
+require('./db/init.js');
 
 // Init router
 require('./router.js');
