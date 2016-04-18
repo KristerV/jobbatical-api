@@ -22,14 +22,14 @@ I have experience with npm and other parts of Node.js thanks to working with Met
 
 Figuring out SQL after years of MongoDB took a while. I have years of experience with SQL, but none lately. I also was not aware of new PostgreSQL features like json_build_object() so the manual work took it's toll. I also made effort to do as much in SQL and as little data crunching in JavaScript as possible - was not worth the time consumed and reverted to JS in many cases in the end.
 
- #### Structure
+#### Structure
 
- I realize this program is full of spaghetti code. Production code should be more thought through.
+I realize this program is full of spaghetti code. Production code should be more thought through.
 
- #### Denormalization
+#### Denormalization
 
- After spending many hours on it I didn not find a way for SQL to `ORDER BY` users last activity (based on info from multiple tables) so I denormalized the data into users.last_activity. I wonder if SQL knows a better way of doing it.
+After spending many hours on it I didn not find a way for SQL to `ORDER BY` users last activity (based on info from multiple tables) so I denormalized the data into users.last_activity. I wonder if SQL knows a better way of doing it.
 
- ## Feedback is welcome!
+## Feedback is welcome!
 
- What was good and what could have been done better? Either open an issue on GitHub or send it to krister.viirsaar@gmail.com
+What was good and what could have been done better? Either open an issue on GitHub or send it to krister.viirsaar@gmail.com
